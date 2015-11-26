@@ -7,7 +7,7 @@ from selenium import webdriver
 from BeautifulSoup import BeautifulSoup
 import re
 import time
-import pickle
+import csv
 
 COUNTRY_OPTION = "Bulgaria"
 COURSE_OPTION = "MBA"
@@ -160,15 +160,17 @@ def loop_alumni_pages(page):
 
 # START MAIN ------------------------------------------------------------------
 
+# URL for local tests
+url_local = "file:///Users/..."
 
-url_local = "file:///Users/wmaterka/Documents/Code/Python/BlueFountain/HTML/output/end page.html"
-url_live = "https://iconnect.insead.edu/Search/Pages/Default.aspx"
+# URL for live scraping
+url_live = "enter your url"
 
 load_index(url_live)
 search_for_alumni()
 
 # scraping the 1st search result page
-print "scraping the 1st search result page"
+print "------scraping the 1st search result page"
 html = driver.page_source
 alumni_list.extend(scrape_alumni_page(html))
 print alumni_list
@@ -178,20 +180,36 @@ while True:
     next_move = loop_alumni_pages(html)
     print count, next_move
     if next_move:
-        print "clicking the next page number: " + next_move
+        print "------clicking the next page number: " + next_move
         driver.find_element_by_link_text(next_move).click()
 
-        print "page loading"
-        time.sleep(13)
+        print "------page loading"
+        time.sleep(12)
 
-        print "scraping the 2nd search result page"
+        print "------scraping the 2nd search result page"
         html = driver.page_source
         alumni_list.extend(scrape_alumni_page(html))
     else:
-        print "Finished scraping"
-        print "saving file"
-        output = open("alumnis.pkl", "wb")
+        print "------Finished scraping, result:"
         print alumni_list
-        pickle.dump(alumni_list, output)
-        output.close()
+        print "------saving file"
+
+        with open("alumni.csv", "w") as csvfile:
+            alumniwriter = csv.writer(csvfile)
+
+            # write the first row - column headers
+            col_headers = []
+            for key in alumni_list[0]:
+                col_headers.append(key)
+
+            alumniwriter.writerow(col_headers)
+
+            # write all the rows
+
+            for alumni in alumni_list:
+                alumni_row = []
+                for item in alumni:
+                    alumni_row.append(alumni[item])
+                alumniwriter.writerow(alumni_row)
+
         break
