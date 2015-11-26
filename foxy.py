@@ -1,3 +1,5 @@
+# TODO: change pickle to JSON format
+
 from selenium import webdriver
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support.ui import WebDriverWait
@@ -157,8 +159,7 @@ def loop_alumni_pages(page):
 
 
 # START MAIN ------------------------------------------------------------------
-# TODO: create a loop to rotate through search pages results
-# TODO: save alumni to a file
+
 
 url_local = "file:///Users/wmaterka/Documents/Code/Python/BlueFountain/HTML/output/end page.html"
 url_live = "https://iconnect.insead.edu/Search/Pages/Default.aspx"
