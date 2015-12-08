@@ -44,12 +44,6 @@ def load_index(url):
     driver = webdriver.Firefox(fp)
     driver.get(url)
 
-    # html_source = driver.page_source
-
-    # write the 1st index file
-    # print("saving the index file")
-    # output_file = open('./HTML/output/index.html', 'w+')
-    # output_file.write(html_source.encode("utf-8"))
 
 
 # PERFORM THE DB SEARCH ------------------------------------------------------------------
